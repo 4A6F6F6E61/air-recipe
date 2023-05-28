@@ -10,12 +10,14 @@ import Firebase
 
 @main
 struct air_recipeApp: App {
+    @StateObject var firebaseUtils = FirebaseUtils()
     init() {
         FirebaseApp.configure()
     }
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(firebaseUtils)
         }
     }
 }

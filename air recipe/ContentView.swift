@@ -14,9 +14,17 @@ struct ContentView: View {
     var body: some View {
         if loggedIn {
             HomeView()
+                .onAppear {
+                    Auth.auth().addStateDidChangeListener { auth, user in
+                        if user == nil {
+                            loggedIn.toggle()
+                        }
+                    }
+                }
         } else {
             NavigationView {
                 WelcomeView()
+                    .navigationTitle("Welcome")
                     .onAppear {
                         Auth.auth().addStateDidChangeListener { auth, user in
                             if user != nil {

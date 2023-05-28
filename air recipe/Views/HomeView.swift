@@ -9,12 +9,24 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView {
+            ListView()
+                .tabItem{
+                    Image(systemName: "house")
+                    Text("Home")
+                }
+            SettingsView()
+                .tabItem{
+                    Image(systemName: "gear")
+                    Text("Settings")
+                }
+        }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
+            .environmentObject(FirebaseUtils())
     }
 }

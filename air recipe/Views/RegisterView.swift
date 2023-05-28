@@ -12,24 +12,32 @@ struct RegisterView: View {
     @State var emailTextField: String = ""
     @State var passwordTextField: String = ""
     @State var confirmTextField: String = ""
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     var body: some View {
         ScrollView {
             Column {
                 TextField("Email", text: $emailTextField)
+                    .autocorrectionDisabled(true)
                     .padding(.horizontal)
                     .frame(height: 55)
                     .background(.regularMaterial)
                     .cornerRadius(10)
-                TextField("Passowrd", text: $passwordTextField)
+                    .autocapitalization(.none)
+                SecureField("Passowrd", text: $passwordTextField)
+                    .autocorrectionDisabled(true)
                     .padding(.horizontal)
                     .frame(height: 55)
                     .background(.regularMaterial)
                     .cornerRadius(10)
-                TextField("Confirm Password", text: $confirmTextField)
+                    .autocapitalization(.none)
+                SecureField("Confirm Password", text: $confirmTextField)
+                    .autocorrectionDisabled(true)
                     .padding(.horizontal)
                     .frame(height: 55)
                     .background(.regularMaterial)
                     .cornerRadius(10)
+                    .autocapitalization(.none)
                 Button {
                     register()
                 } label: {
@@ -60,7 +68,9 @@ struct RegisterView: View {
         Auth.auth().createUser(withEmail: emailTextField, password: passwordTextField) { result, error in
             if error != nil {
                 print(error?.localizedDescription as Any)
+                return
             }
+            self.presentationMode.wrappedValue.dismiss()
         }
     }
 }
